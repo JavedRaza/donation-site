@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+    <title>Payment</title>
+    <style>
+   
+      body, html {
+        height: 100%;
+        margin: 0;
+        background-color:#FAEBD7;
+      }
+      
+      </style>
+<body>
+    <h1>.</h1>
+    <div class="d-flex justify-content-center align-items-center container ">
+
+      <div class="row ">
+          <form action="payment" method="POST">
+            <div class="form-group">
+              <label for="inputamount" class="control-label">Confirm Your Amount for Donation </label>
+              <input type="number" class="form-control" id="inputamount" name="amt" aria-labelledby="passwordnotification">
+              </div>
+              <div class="form-group">
+                   <div class="text-center">
+                       <a href="{% url 'home' %}" class="btn btn-lg btn-primary">Back To Home</a>
+                   </div>
+              </div>
+              <div class="form-group text-center">
+                <div id="paypal-button-container"></div>
+                <script src="https://www.paypal.com/sdk/js?client-id=AXGtLg_Q8fi2Ezdln1jUF0CcSgOXknlXjlwtGiAU_YlBw5I4mT7MOvcz7NHIBj41Ea6MUACzIlq5quvR"></script>
+                </script>
+            
+            <script>
+                paypal.Buttons({
+                  createOrder: function(data, actions) {
+                    // This function sets up the details of the transaction, including the amount and line item details.
+                    return actions.order.create({
+                      purchase_units: [{
+                        amount: {
+                          value: document.getElementById("inputamount").value
+                        }
+                      }]
+                    });
+                  },
+                  onApprove: function(data, actions) {
+                    // This function captures the funds from the transaction.
+                    return actions.order.capture().then(function(details) {
+                      // This function shows a transaction success message to your buyer.
+                      alert('Thank You for your Donation  ' + details.payer.name.given_name);
+                    });
+                  }
+                }).render('#paypal-button-container');
+                //This function displays Smart Payment Buttons on your web page.
+              </script>   
+              </div>
+          </form>
+  
+      </div>
+  
+  </div>
+    
+</body>
+</html>
